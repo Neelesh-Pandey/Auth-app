@@ -32,10 +32,7 @@ const formSchema = z.object({
   price: z.coerce.number(),
 });
 
-export const PriceForm = ({
-  initialData,
-  courseId,
-}: PriceFormProps) => {
+export const PriceForm = ({ initialData, courseId }: PriceFormProps) => {
   const [isEditing, setisEditing] = useState(false);
 
   const toggleEdit = () => setisEditing((current) => !current);
@@ -46,7 +43,7 @@ export const PriceForm = ({
     resolver: zodResolver(formSchema),
     defaultValues: {
       price: initialData?.price || undefined,
-    }
+    },
   });
 
   const { isSubmitting, isValid } = form.formState;
@@ -76,12 +73,16 @@ export const PriceForm = ({
           )}
         </Button>
       </div>
-      {!isEditing && 
-      <p className={cn("text-sm mt-2",
-        !initialData.price && "text-slate-500 italic",
-      )}>
-        {initialData.price ? formatPrice(initialData.price) : "No price"}
-      </p>}
+      {!isEditing && (
+        <p
+          className={cn(
+            "text-sm mt-2",
+            !initialData.price && "text-slate-500 italic"
+          )}
+        >
+          {initialData.price ? formatPrice(initialData.price) : "No price"}
+        </p>
+      )}
       {isEditing && (
         <Form {...form}>
           <form
@@ -94,13 +95,13 @@ export const PriceForm = ({
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                   <Input
-                    type="number"
-                    step="0.01"
-                    disabled={isSubmitting}
-                    placeholder="Set a price for your course"
-                    {...field}
-                   />
+                    <Input
+                      type="number"
+                      step="0.01"
+                      disabled={isSubmitting}
+                      placeholder="Set a price for your course"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
