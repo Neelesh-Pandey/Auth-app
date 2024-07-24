@@ -45,8 +45,8 @@ export const DescriptionForm = ({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      description: initialData?.description || ""
-    }
+      description: initialData?.description || "",
+    },
   });
 
   const { isSubmitting, isValid } = form.formState;
@@ -76,12 +76,16 @@ export const DescriptionForm = ({
           )}
         </Button>
       </div>
-      {!isEditing && 
-      <p className={cn("text-sm mt-2",
-        !initialData.description && "text-slate-500 italic",
-      )}>
-      {initialData.description || "No description"}
-      </p>}
+      {!isEditing && (
+        <p
+          className={cn(
+            "text-sm mt-2",
+            !initialData.description && "text-slate-500 italic"
+          )}
+        >
+          {initialData.description || "No description"}
+        </p>
+      )}
       {isEditing && (
         <Form {...form}>
           <form
