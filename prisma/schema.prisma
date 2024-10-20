@@ -7,6 +7,7 @@
 // prisma/schema.prisma
 generator client {
   provider = "prisma-client-js"
+
 }
 datasource db {
   provider  = "postgresql"
@@ -37,6 +38,8 @@ model Course {
   updatedAt DateTime @updatedAt
 
   @@index([categoryId])
+
+  
 }
 
 model Category {
@@ -94,7 +97,7 @@ model MuxData {
 
 model UserProgress {
   id String @id @default(uuid())
-  userid String
+  userId String
 
   chapterId String
   chapter Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
@@ -105,12 +108,12 @@ model UserProgress {
   updatedAt DateTime @updatedAt
 
   @@index([chapterId])
-  @@unique([userid, chapterId])
+  @@unique([userId, chapterId])
 }
 
 model Purchase {
   id String @id @default(uuid())
-  userid String
+  userId String
 
   courseId String
   course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
@@ -118,7 +121,8 @@ model Purchase {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([userid])
+  @@unique([userId, courseId])
+  @@index([userId])
 }
 
 model StripeCustomer {

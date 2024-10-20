@@ -29,13 +29,13 @@ interface ChapterDescriptionFormProps {
 }
 
 const formSchema = z.object({
-  description: z.string().min(1)
+  description: z.string().min(1),
 });
 
 export const ChapterDescriptionForm = ({
   initialData,
   courseId,
-  chapterId
+  chapterId,
 }: ChapterDescriptionFormProps) => {
   const [isEditing, setisEditing] = useState(false);
 
@@ -54,7 +54,10 @@ export const ChapterDescriptionForm = ({
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}`, values);
+      await axios.patch(
+        `/api/courses/${courseId}/chapters/${chapterId}`,
+        values
+      );
       toast.success("Chapter updated");
       toggleEdit();
       router.refresh();
@@ -85,10 +88,9 @@ export const ChapterDescriptionForm = ({
           )}
         >
           {!initialData.description && "No description"}
-          {initialData.description && (<Preview 
-            value={initialData.description}
-            
-          />)}
+          {initialData.description && (
+            <Preview value={initialData.description} />
+          )}
         </div>
       )}
       {isEditing && (
@@ -103,9 +105,7 @@ export const ChapterDescriptionForm = ({
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Editor
-                      {...field}
-                    />
+                    <Editor {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -122,3 +122,4 @@ export const ChapterDescriptionForm = ({
     </div>
   );
 };
+  

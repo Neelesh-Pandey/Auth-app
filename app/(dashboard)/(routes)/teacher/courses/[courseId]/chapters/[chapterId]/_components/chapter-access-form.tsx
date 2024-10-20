@@ -19,8 +19,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { Chapter, Course } from "@prisma/client";
-import { Editor } from "@/components/editor";
+import { Chapter } from "@prisma/client";
 
 import { Checkbox } from "@/components/ui/checkbox";
 
@@ -37,7 +36,7 @@ const formSchema = z.object({
 export const ChapterAccessForm = ({
   initialData,
   courseId,
-  chapterId
+  chapterId,
 }: ChapterAccessFormProps) => {
   const [isEditing, setisEditing] = useState(false);
 
@@ -56,7 +55,10 @@ export const ChapterAccessForm = ({
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}`, values);
+      await axios.patch(
+        `/api/courses/${courseId}/chapters/${chapterId}`,
+        values
+      );
       toast.success("Chapter updated");
       toggleEdit();
       router.refresh();
@@ -86,9 +88,11 @@ export const ChapterAccessForm = ({
             !initialData.isFree && "text-slate-500 italic"
           )}
         >
-         {initialData.isFree ? (
-          <>This chapter is free for preiview</>
-         ): (<>This chapter is not free</>)}
+          {initialData.isFree ? (
+            <>This chapter is free for preiview</>
+          ) : (
+            <>This chapter is not free</>
+          )}
         </p>
       )}
       {isEditing && (
@@ -101,21 +105,20 @@ export const ChapterAccessForm = ({
               control={form.control}
               name="isFree"
               render={({ field }) => (
-               <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
-                <FormControl>
-                  <Checkbox 
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
-                <div className="space-y-1 leading-none">
-                  <FormDescription>
-                    Check this box if you want to make this chapter free for preview
-                  </FormDescription>
-
-                </div>
-
-               </FormItem>
+                <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                  <div className="space-y-1 leading-none">
+                    <FormDescription>
+                      Check this box if you want to make this chapter free for
+                      preview
+                    </FormDescription>
+                  </div>
+                </FormItem>
               )}
             />
             <div className="flex items-center gap-x-2">

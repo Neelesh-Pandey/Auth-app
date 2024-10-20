@@ -42,7 +42,6 @@ export const AttachmentForm = ({
     }
   };
 
-
   const onDelete = async (id: string) => {
     try {
       setDeletingId(id);
@@ -54,12 +53,12 @@ export const AttachmentForm = ({
     } finally {
       setDeletingId(null);
     }
-  }
+  };
 
   return (
     <div className="mt-6 border bg-slate-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Course AttachmentForms
+        Course Attachments
         <Button onClick={toggleEdit} variant="ghost">
           {isEditing && <>Cancel</>}
           {!isEditing && (
@@ -94,8 +93,9 @@ export const AttachmentForm = ({
 
                   {deletingId !== attachment.id && (
                     <button
-                     onClick={() =>onDelete(attachment.id)}
-                    className="ml-auto  hover:opacity-75 transition">
+                      onClick={() => onDelete(attachment.id)}
+                      className="ml-auto  hover:opacity-75 transition"
+                    >
                       <X className="h-4 w-4 " />
                     </button>
                   )}

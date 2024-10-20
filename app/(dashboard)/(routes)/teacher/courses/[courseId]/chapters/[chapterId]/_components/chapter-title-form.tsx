@@ -17,7 +17,6 @@ import { Button } from "@/components/ui/button";
 import { Pencil } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import Router from "next/router";
 import { useRouter } from "next/navigation";
 
 interface ChapterTitleFormProps {
